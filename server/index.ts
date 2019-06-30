@@ -5,7 +5,7 @@ import express from 'express';
 import { wiki } from './wiki';
 
 const app = express();
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 const readFile = promisify(fs.readFile);
 
 app.use(express.static('dist'));

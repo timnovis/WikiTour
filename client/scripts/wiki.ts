@@ -77,7 +77,7 @@ export class WikiApp {
   }
 
   public read() {
-    const article = document.querySelector('.article p');
+    const article = document.querySelector('.article');
 
     window.speechSynthesis.cancel();
 
