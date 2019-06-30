@@ -1,0 +1,26 @@
+{
+  "name": "wikiwhere",
+  "version": "1.0.0",
+  "description": "Location aware Wikipedia reader",
+  "main": "dist/server/server/index.js",
+  "scripts": {
+    "dev": "rm -rf dist && tsc && concurrently --kill-others \"tsc --watch\" \"nodemon dist/server/server/index.js\" \"parcel watch ./client/*.html\"",
+    "build": "rm -rf dist && tsc && parcel build ./client/*.html",
+    "start": "node dist/server/server/index.js"
+  },
+  "keywords": [],
+  "author": "Tim Novis <tim.novis@me.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.0",
+    "@types/node-fetch": "^2.3.7",
+    "concurrently": "^4.1.1",
+    "nodemon": "^1.19.1",
+    "parcel-bundler": "^1.12.3",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  }
+}
