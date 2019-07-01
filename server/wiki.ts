@@ -9,7 +9,7 @@ export const wiki = {
    */
   async search(lat: number, lng: number) {
     const request = await fetch(
-      `https://en.wikipedia.org/w/api.php?format=json&action=query&list=geosearch&gscoord=${lat}|${lng}&gsradius=2000&gsmaxdim=10000&gslimit=25`,
+      `https://en.wikipedia.org/w/api.php?format=json&action=query&list=geosearch&gscoord=${lat}|${lng}&gsradius=3000&gsmaxdim=100000&gslimit=25`,
     );
 
     const response = await request.json();

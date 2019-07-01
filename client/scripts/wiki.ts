@@ -4,7 +4,6 @@ export class WikiApp {
   public state: {
     geoId: number;
     locations: Array<SearchResult>;
-    loading: boolean;
     position: Position;
     newLocationsAvailable: boolean;
   };
@@ -13,16 +12,22 @@ export class WikiApp {
     this.state = {
       geoId: 0,
       locations: [],
-      loading: false,
       position: null,
       newLocationsAvailable: false,
     };
   }
 
   private async fetchLocationsList({ coords }: Position) {
+    if (this.state.locations.length === 0) {
+      // First time loading
+      document.querySelector('.loading').classList.add('loading--visible');
+    }
+
     const request = await fetch(`/landmarks?lat=${coords.latitude}&lng=${coords.longitude}`);
 
     const locations: Array<SearchResult> = await request.json();
+
+    document.querySelector('.loading').classList.remove('loading--visible');
 
     return locations;
   }
@@ -59,28 +64,20 @@ export class WikiApp {
     const refreshButton: HTMLButtonElement = document.querySelector('.refresh');
 
     this.state.geoId = navigator.geolocation.watchPosition(async position => {
-      if (this.state.position !== null) {
-        const locations = await this.fetchLocationsList(position);
+      const locations = await this.fetchLocationsList(position);
 
+      if (this.state.position !== null) {
         if (locations.length > 0 && this.state.locations[0].pageid !== locations[0].pageid) {
           this.updateLocationList(locations);
           this.state.newLocationsAvailable = true;
           refreshButton.classList.add('refresh--visible');
         }
       } else {
-        this.updateLocationList(await this.fetchLocationsList(position));
+        this.updateLocationList(locations);
         this.renderList();
       }
 
       this.state.position = position;
     });
-  }
-
-  public read() {
-    const article = document.querySelector('.article');
-
-    window.speechSynthesis.cancel();
-
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(article.textContent));
   }
 }

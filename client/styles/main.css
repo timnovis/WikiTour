@@ -88,3 +88,12 @@ header {
 .refresh--visible {
   display: block;
 }
+
+.loading {
+  display: none;
+  text-align: center;
+}
+
+.loading--visible {
+  display: block;
+}
